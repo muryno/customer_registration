@@ -203,9 +203,9 @@ abstract class _RegistrationScreenMobx with Store {
 
   Future<void> submit( {BuildContext context}) async {
 
-    // validateAllField();
-    // //call button validation
-    // if (hasErrors) return;
+    validateAllField();
+    //call button validation
+    if (hasErrors) return;
 
 
     FileDownloaderState().saveFile(file: imageUrl,context: context);

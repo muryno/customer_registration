@@ -133,7 +133,7 @@ class _RegistrationScreen extends State<RegistrationScreen> {
                     filled: true,
                     textAlign: TextAlign.center,
                     color : Color(0XFFD8D8D8),
-                    onChanged: (v) => store.IMEI,
+                    onChanged: (v) => store.IMEI= v,
                     message: store.IMEIErr,
                     error: store.IMEIErr != null,
                   ),
@@ -149,7 +149,7 @@ class _RegistrationScreen extends State<RegistrationScreen> {
                     filled: true,
                     textAlign: TextAlign.center,
                     color : Color(0XFFD8D8D8),
-                    onChanged: (v) => store.firstName,
+                    onChanged: (v) => store.firstName= v,
                     message: store.firstNameErr,
                     error: store.firstNameErr != null,
 
@@ -167,7 +167,7 @@ class _RegistrationScreen extends State<RegistrationScreen> {
                     filled: true,
                     textAlign: TextAlign.center,
                     color : Color(0XFFD8D8D8),
-                    onChanged: (v) => store.lastName,
+                    onChanged: (v) => store.lastName= v,
                     message: store.lastNameErr,
                     error: store.lastNameErr != null,
                   ),
@@ -231,12 +231,12 @@ class _RegistrationScreen extends State<RegistrationScreen> {
           builder: (_) =>
             InputField(
               type: TextInputType.emailAddress,
-              hint: 'Enter Enter',
+              hint: 'Enter Email',
               border:  InputBorder.none,
               filled: true,
               textAlign: TextAlign.center,
               color : Color(0XFFD8D8D8),
-              onChanged: (v) => store.email ,
+              onChanged: (v) => store.email= v ,
               message: store.emailErr,
               error: store.emailErr != null,
             )

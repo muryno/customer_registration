@@ -45,7 +45,10 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 
-	<key>UIFileSharingEnabled</key>
-    <true/>
+    <key>NSCameraUsageDescription</key>
+    <string>This app requires to use your camera</string>
+
+     <key>NSPhotoLibraryUsageDescription</key>
+      <string>This app requires to use your gallery</string>
 </dict>
 </plist>

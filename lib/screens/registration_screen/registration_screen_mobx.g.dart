@@ -32,6 +32,111 @@ mixin _$RegistrationScreenMobx on _RegistrationScreenMobx, Store {
     });
   }
 
+  final _$firstNameAtom = Atom(name: '_RegistrationScreenMobx.firstName');
+
+  @override
+  String get firstName {
+    _$firstNameAtom.reportRead();
+    return super.firstName;
+  }
+
+  @override
+  set firstName(String value) {
+    _$firstNameAtom.reportWrite(value, super.firstName, () {
+      super.firstName = value;
+    });
+  }
+
+  final _$lastNameAtom = Atom(name: '_RegistrationScreenMobx.lastName');
+
+  @override
+  String get lastName {
+    _$lastNameAtom.reportRead();
+    return super.lastName;
+  }
+
+  @override
+  set lastName(String value) {
+    _$lastNameAtom.reportWrite(value, super.lastName, () {
+      super.lastName = value;
+    });
+  }
+
+  final _$dobAtom = Atom(name: '_RegistrationScreenMobx.dob');
+
+  @override
+  String get dob {
+    _$dobAtom.reportRead();
+    return super.dob;
+  }
+
+  @override
+  set dob(String value) {
+    _$dobAtom.reportWrite(value, super.dob, () {
+      super.dob = value;
+    });
+  }
+
+  final _$IMEIAtom = Atom(name: '_RegistrationScreenMobx.IMEI');
+
+  @override
+  String get IMEI {
+    _$IMEIAtom.reportRead();
+    return super.IMEI;
+  }
+
+  @override
+  set IMEI(String value) {
+    _$IMEIAtom.reportWrite(value, super.IMEI, () {
+      super.IMEI = value;
+    });
+  }
+
+  final _$pictureAtom = Atom(name: '_RegistrationScreenMobx.picture');
+
+  @override
+  File get picture {
+    _$pictureAtom.reportRead();
+    return super.picture;
+  }
+
+  @override
+  set picture(File value) {
+    _$pictureAtom.reportWrite(value, super.picture, () {
+      super.picture = value;
+    });
+  }
+
+  final _$emailAtom = Atom(name: '_RegistrationScreenMobx.email');
+
+  @override
+  String get email {
+    _$emailAtom.reportRead();
+    return super.email;
+  }
+
+  @override
+  set email(String value) {
+    _$emailAtom.reportWrite(value, super.email, () {
+      super.email = value;
+    });
+  }
+
+  final _$datePickedAtom = Atom(name: '_RegistrationScreenMobx.datePicked');
+
+  @override
+  DateTime get datePicked {
+    _$datePickedAtom.reportRead();
+    return super.datePicked;
+  }
+
+  @override
+  set datePicked(DateTime value) {
+    _$datePickedAtom.reportWrite(value, super.datePicked, () {
+      super.datePicked = value;
+    });
+  }
+
   final _$firstNameErrAtom = Atom(name: '_RegistrationScreenMobx.firstNameErr');
 
   @override
@@ -219,6 +324,13 @@ mixin _$RegistrationScreenMobx on _RegistrationScreenMobx, Store {
   String toString() {
     return '''
 imageUrl: ${imageUrl},
+firstName: ${firstName},
+lastName: ${lastName},
+dob: ${dob},
+IMEI: ${IMEI},
+picture: ${picture},
+email: ${email},
+datePicked: ${datePicked},
 firstNameErr: ${firstNameErr},
 lastNameErr: ${lastNameErr},
 dobErr: ${dobErr},
