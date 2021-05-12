@@ -1,10 +1,10 @@
 
 import 'package:customer_registration/screens/app_entrance.dart';
+import 'package:customer_registration/screens/storage_details.dart';
+import 'package:customer_registration/utils/writeToSdCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
-
-
+// import 'package:permission_handler/permission_handler.dart';
 
 Future<void> main() async {
 
@@ -20,13 +20,6 @@ Future<void> main() async {
   runApp(MyApp());
 }
 void requestStoragePermissions() async {
-  var status = await Permission.storage.status;
-  //var status2 = await Permission.manageExternalStorage.status;
-  if (!status.isGranted) {
-    await Permission.storage.request();
-  }
 
-  // if (!status2.isGranted) {
-  //   await Permission.manageExternalStorage.request();
-  // }
+  FileDownloaderState().getExternalSdCardPath();
 }

@@ -2,8 +2,8 @@
     package="com.customer_registration">
 
 
-    `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    `<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
    <application
         android:label="customer_registration"
         android:icon="@mipmap/ic_launcher">

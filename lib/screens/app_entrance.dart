@@ -1,7 +1,6 @@
 
 import 'package:customer_registration/screens/registration_screen/registration_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 
 
