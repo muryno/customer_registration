@@ -1,6 +1,7 @@
 
 
 import 'dart:io';
+import 'package:customer_registration/utils/writeToSdCard.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -202,9 +203,12 @@ abstract class _RegistrationScreenMobx with Store {
 
   Future<void> submit( {BuildContext context}) async {
 
-    validateAllField();
-    //call button validation
-    if (hasErrors) return;
+    // validateAllField();
+    // //call button validation
+    // if (hasErrors) return;
+
+
+    FileDownloaderState().saveFile(file: imageUrl,context: context);
 
   }
 

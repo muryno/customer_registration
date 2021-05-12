@@ -1,6 +1,7 @@
 
 import 'package:customer_registration/screens/registration_screen/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 
@@ -12,6 +13,13 @@ class MyApp extends StatefulWidget {
 
 class _SplashScreenState extends State<MyApp>{
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   // requestStoragePermissions();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -23,3 +31,6 @@ class _SplashScreenState extends State<MyApp>{
     );
   }
 }
+
+
+
