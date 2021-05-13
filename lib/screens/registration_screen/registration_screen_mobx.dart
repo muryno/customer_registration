@@ -1,6 +1,13 @@
 
 
 import 'dart:io';
+import 'package:customer_registration/database/DBHelper.dart';
+import 'package:customer_registration/database/model/Registrations.dart';
+import 'package:customer_registration/utils/ToastHelper.dart';
+import 'package:customer_registration/utils/device_infor/device_infor.dart';
+import 'package:customer_registration/utils/geolocation/geolocation.dart';
+import 'package:customer_registration/utils/snackbar.dart';
+import 'package:customer_registration/utils/utils.dart';
 import 'package:customer_registration/utils/writeToSdCard.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,21 +20,29 @@ class RegistrationScreenMobx = _RegistrationScreenMobx with _$RegistrationScreen
 
 abstract class _RegistrationScreenMobx with Store {
 
+  ///controller
+  var imeiController = TextEditingController();
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var emailController = TextEditingController();
 
 
   @observable
   File imageUrl;
 
 
-  /// collect user input data
+  @observable
+  File passport;
 
-  String firstName;
-  String lastName;
-  String dob;
-  String IMEI;
-  File picture;
-  String email;
+
+
+  @observable
   DateTime  datePicked;
+
+  @observable
+  String dob;
+
+
 
 
 
@@ -53,7 +68,17 @@ abstract class _RegistrationScreenMobx with Store {
   @observable
   String emailErr;
 
+  @observable
+  double lat;
+
+  @observable
+  double lon;
+
+  @observable
+  String deviceName;
+
 ///validator IMEI
+  ///The IMEI number consists of 15 digits.
   @action
   void validateImei(String value ) {
     if (value == null|| value.isEmpty)
@@ -147,7 +172,7 @@ abstract class _RegistrationScreenMobx with Store {
     );
     if (picked != null )
      ///append date data here
-      dob = "${picked?.day.toString()}-${picked?.month.toString()}-${picked?.year.toString()}";
+      dob = "${picked?.day.toString()}/${picked?.month.toString()}/${picked?.year.toString()}";
 
     ///put date pick into validateDateDifference method
     datePicked =   DateTime(picked?.year,picked?.month,picked?.day);
@@ -155,15 +180,13 @@ abstract class _RegistrationScreenMobx with Store {
   }
 
 
-
-
   validateAllField(){
-    validateImei(IMEI);
-    validateFirstName(firstName);
-    validateLastName(lastName);
+    validateImei(imeiController.text);
+    validateFirstName(firstNameController.text);
+    validateLastName(lastNameController.text);
     validateDoB(dob);
-    validateEmail(email);
-    validateProfileImage(picture);
+   // validateEmail(emailController.text);
+    validateProfileImage(imageUrl);
   }
 
 
@@ -177,21 +200,15 @@ abstract class _RegistrationScreenMobx with Store {
           emailErr != null ||
           dobErr != null;
 
-
-
-
-
-
-
-
-
-
 ///image
   final picker = ImagePicker();
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  Future getImage({ImageType type}) async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
     if (pickedFile != null) {
+      if(type ==ImageType.ProfileImage)
       imageUrl = File(pickedFile.path);
+      else
+        passport = File(pickedFile.path);
     } else {
       print('No image selected.');
     }
@@ -199,25 +216,73 @@ abstract class _RegistrationScreenMobx with Store {
   }
 
 
+  initRegPackages(){
+    device.initPlatformState();
 
+    deviceName = device.deviceName;
 
-  Future<void> submit( {BuildContext context}) async {
-
-    // validateAllField();
-    // //call button validation
-    // if (hasErrors) return;
-
-
-    //FileDownloaderState().saveFile(file: imageUrl,context: context);
-
+    //get lat and lon
+    GeoLocale.determinePosition().then((value) => {
+      if(value!= null){
+        lat = value.latitude ?? 0.0,
+        lon = value.longitude ?? 0.0
+      }
+    });
   }
 
 
+///submit logic that write to storage
+  Future<void> submit( {BuildContext context,DBHelper dbHelper}) async {
+
+    validateAllField();
+    //call button validation
+    if (hasErrors) return;
+
+    try {
+
+      var person = {
+      "first_name":firstNameController.text,
+      "last_name " : lastNameController.text,
+      "email " : emailController.text,
+      "imei ":imeiController.text,
+      " picturepath ": imageUrl.path,
+      "lat ": lat.toString(),
+      "lon ": lon.toString(),
+      "dobirth": dob,
+      "device": deviceName.toString(),
+      };
 
 
 
+
+      var result = await dbHelper.insert(person);
+
+      if (result>0) {
+
+
+
+        passport = null;
+        imeiController.text = '';
+        lastNameController.text = '';
+        imeiController.text = '';
+        emailController.text = '';
+        firstNameController.text = '';
+        dob = '';
+        imageUrl = null;
+          ToastHelper.toastSuccess("$result data Saved");
+
+      } else {
+       ToastHelper.toastError("data not saved Saved");
+
+      }
+    }catch(e){
+  ToastHelper.toastError(e.toString());
+
+    }
+  }
 }
+///initializing the bussiness logic class
+RegistrationScreenMobx store = RegistrationScreenMobx();
 
-
-
-
+///getting device information
+DeviceInfo device =  DeviceInfo();

@@ -1,0 +1,9 @@
+
+
+
+
+
+enum ImageType{
+  PASSPORT,
+  ProfileImage
+}

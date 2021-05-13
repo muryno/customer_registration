@@ -19,6 +19,7 @@ class StorageDetails {
 
 
 
+  ///GETTING PERMISSION FROM NATIVE ANDROID WITH METHOD CHANNEL
 
   static Future<String>  getPermission(String path) async {
     final String version = await platform.invokeMethod('takeCardUriPermission',path);

@@ -40,8 +40,8 @@ class MainActivity: FlutterActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val sdCard = File(sdCardRootPath)
             val storageManager: StorageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
-            val storageVolume: StorageVolume = storageManager.getStorageVolume(sdCard)
-            val intent: Intent = storageVolume.createAccessIntent(null)
+//            val storageVolume: StorageVolume = storageManager.getStorageVolume(sdCard)
+//            val intent: Intent = storageVolume.createAccessIntent(null)
             try {
                 startActivityForResult(intent, 4010)
             } catch (e: ActivityNotFoundException) {
@@ -53,13 +53,13 @@ class MainActivity: FlutterActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 4010) {
-            val uri: Uri = data?.data
+            val uri: Uri? = data?.data
             grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
                     Intent.FLAG_GRANT_READ_URI_PERMISSION)
             val takeFlags: Int = data.flags and (Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
                     Intent.FLAG_GRANT_READ_URI_PERMISSION)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                contentResolver.takePersistableUriPermission(uri, takeFlags)
+                uri?.let { contentResolver.takePersistableUriPermission(it, takeFlags) }
             }
 
            // methodChannel.invokeMethod("resolveWithSDCardUri", getUri().toString())

@@ -1,25 +1,28 @@
 
+import 'package:customer_registration/database/DBHelper.dart';
 import 'package:customer_registration/screens/app_entrance.dart';
-import 'package:customer_registration/screens/storage_details.dart';
-import 'package:customer_registration/utils/writeToSdCard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-// import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
-
 // during plugin initialization), then you need to explicitly call the `WidgetsFlutterBinding.ensureInitialized()
   WidgetsFlutterBinding.ensureInitialized();
 
-  requestStoragePermissions();
+ // requestStoragePermissions();
 
-  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
-  runApp(MyApp());
+  runApp(CustomerHome());
 }
-void requestStoragePermissions() async {
 
-  FileDownloaderState().getExternalSdCardPath();
+
+class CustomerHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => DBHelper())],
+        child:AppEntrance()
+
+    );
+  }
 }

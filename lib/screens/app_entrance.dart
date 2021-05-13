@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 
 
-class MyApp extends StatefulWidget {
+class AppEntrance extends StatefulWidget {
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _AppEntrance createState() => _AppEntrance();
 }
 
-class _SplashScreenState extends State<MyApp>{
+class _AppEntrance extends State<AppEntrance>{
 
 
   @override
@@ -21,6 +21,7 @@ class _SplashScreenState extends State<MyApp>{
   }
   @override
   Widget build(BuildContext context) {
+
 
     return   MaterialApp(
       //onGenerateRoute: Routers.generateRoute,

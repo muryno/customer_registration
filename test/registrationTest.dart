@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:customer_registration/utils/device_infor/device_infor.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:customer_registration/screens/registration_screen/registration_screen_mobx.dart';
 
@@ -8,9 +9,14 @@ import 'package:customer_registration/screens/registration_screen/registration_s
 void main() {
 
   group('Create test for ssim registration', () {
+
+
+
+    DeviceInfo device =  DeviceInfo();
+
     RegistrationScreenMobx store;
     setUp((){
-
+      device.initPlatformState();
       store = RegistrationScreenMobx();
     });
 
@@ -101,6 +107,12 @@ void main() {
     });
 
 
+
+
+    // test('test for device name ',(){
+    // var result = device.deviceName;
+    //   expect(result, '');
+    // });
 
 
 

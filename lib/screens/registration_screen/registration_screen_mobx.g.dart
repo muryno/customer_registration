@@ -32,33 +32,18 @@ mixin _$RegistrationScreenMobx on _RegistrationScreenMobx, Store {
     });
   }
 
-  final _$firstNameAtom = Atom(name: '_RegistrationScreenMobx.firstName');
+  final _$passportAtom = Atom(name: '_RegistrationScreenMobx.passport');
 
   @override
-  String get firstName {
-    _$firstNameAtom.reportRead();
-    return super.firstName;
+  File get passport {
+    _$passportAtom.reportRead();
+    return super.passport;
   }
 
   @override
-  set firstName(String value) {
-    _$firstNameAtom.reportWrite(value, super.firstName, () {
-      super.firstName = value;
-    });
-  }
-
-  final _$lastNameAtom = Atom(name: '_RegistrationScreenMobx.lastName');
-
-  @override
-  String get lastName {
-    _$lastNameAtom.reportRead();
-    return super.lastName;
-  }
-
-  @override
-  set lastName(String value) {
-    _$lastNameAtom.reportWrite(value, super.lastName, () {
-      super.lastName = value;
+  set passport(File value) {
+    _$passportAtom.reportWrite(value, super.passport, () {
+      super.passport = value;
     });
   }
 
@@ -74,66 +59,6 @@ mixin _$RegistrationScreenMobx on _RegistrationScreenMobx, Store {
   set dob(String value) {
     _$dobAtom.reportWrite(value, super.dob, () {
       super.dob = value;
-    });
-  }
-
-  final _$IMEIAtom = Atom(name: '_RegistrationScreenMobx.IMEI');
-
-  @override
-  String get IMEI {
-    _$IMEIAtom.reportRead();
-    return super.IMEI;
-  }
-
-  @override
-  set IMEI(String value) {
-    _$IMEIAtom.reportWrite(value, super.IMEI, () {
-      super.IMEI = value;
-    });
-  }
-
-  final _$pictureAtom = Atom(name: '_RegistrationScreenMobx.picture');
-
-  @override
-  File get picture {
-    _$pictureAtom.reportRead();
-    return super.picture;
-  }
-
-  @override
-  set picture(File value) {
-    _$pictureAtom.reportWrite(value, super.picture, () {
-      super.picture = value;
-    });
-  }
-
-  final _$emailAtom = Atom(name: '_RegistrationScreenMobx.email');
-
-  @override
-  String get email {
-    _$emailAtom.reportRead();
-    return super.email;
-  }
-
-  @override
-  set email(String value) {
-    _$emailAtom.reportWrite(value, super.email, () {
-      super.email = value;
-    });
-  }
-
-  final _$datePickedAtom = Atom(name: '_RegistrationScreenMobx.datePicked');
-
-  @override
-  DateTime get datePicked {
-    _$datePickedAtom.reportRead();
-    return super.datePicked;
-  }
-
-  @override
-  set datePicked(DateTime value) {
-    _$datePickedAtom.reportWrite(value, super.datePicked, () {
-      super.datePicked = value;
     });
   }
 
@@ -242,6 +167,51 @@ mixin _$RegistrationScreenMobx on _RegistrationScreenMobx, Store {
     });
   }
 
+  final _$latAtom = Atom(name: '_RegistrationScreenMobx.lat');
+
+  @override
+  double get lat {
+    _$latAtom.reportRead();
+    return super.lat;
+  }
+
+  @override
+  set lat(double value) {
+    _$latAtom.reportWrite(value, super.lat, () {
+      super.lat = value;
+    });
+  }
+
+  final _$lonAtom = Atom(name: '_RegistrationScreenMobx.lon');
+
+  @override
+  double get lon {
+    _$lonAtom.reportRead();
+    return super.lon;
+  }
+
+  @override
+  set lon(double value) {
+    _$lonAtom.reportWrite(value, super.lon, () {
+      super.lon = value;
+    });
+  }
+
+  final _$deviceNameAtom = Atom(name: '_RegistrationScreenMobx.deviceName');
+
+  @override
+  String get deviceName {
+    _$deviceNameAtom.reportRead();
+    return super.deviceName;
+  }
+
+  @override
+  set deviceName(String value) {
+    _$deviceNameAtom.reportWrite(value, super.deviceName, () {
+      super.deviceName = value;
+    });
+  }
+
   final _$showsDatePickerAsyncAction =
       AsyncAction('_RegistrationScreenMobx.showsDatePicker');
 
@@ -324,13 +294,8 @@ mixin _$RegistrationScreenMobx on _RegistrationScreenMobx, Store {
   String toString() {
     return '''
 imageUrl: ${imageUrl},
-firstName: ${firstName},
-lastName: ${lastName},
+passport: ${passport},
 dob: ${dob},
-IMEI: ${IMEI},
-picture: ${picture},
-email: ${email},
-datePicked: ${datePicked},
 firstNameErr: ${firstNameErr},
 lastNameErr: ${lastNameErr},
 dobErr: ${dobErr},
@@ -338,6 +303,9 @@ IMEIErr: ${IMEIErr},
 pictureErr: ${pictureErr},
 showDate: ${showDate},
 emailErr: ${emailErr},
+lat: ${lat},
+lon: ${lon},
+deviceName: ${deviceName},
 hasErrors: ${hasErrors}
     ''';
   }

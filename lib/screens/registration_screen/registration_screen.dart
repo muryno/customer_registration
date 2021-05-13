@@ -1,11 +1,15 @@
 
+import 'package:customer_registration/database/DBHelper.dart';
 import 'package:customer_registration/screens/registration_screen/registration_screen_mobx.dart';
 import 'package:customer_registration/utils/colors.dart';
 import 'package:customer_registration/utils/input_field.dart';
 import 'package:customer_registration/utils/required_field.dart';
+import 'package:customer_registration/utils/snackbar.dart';
+import 'package:customer_registration/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 
 class RegistrationScreen extends StatefulWidget {
@@ -16,11 +20,25 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreen extends State<RegistrationScreen> {
 
-  RegistrationScreenMobx store = RegistrationScreenMobx();
 
 
-  @override
-  Widget build(BuildContext context) {
+
+
+
+
+
+@override
+  void initState() {
+  ///initializing RegistrationScreenMobx that contain buisness logic
+  store.initRegPackages();
+    super.initState();
+  }
+
+
+DBHelper dbHelper;
+@override
+Widget build(BuildContext context) {
+  dbHelper = Provider.of<DBHelper>(context);
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -60,7 +78,8 @@ class _RegistrationScreen extends State<RegistrationScreen> {
               builder: (_) =>
                   GestureDetector(
                     onTap: () {
-                      store.getImage();
+                      //call camera function
+                      store.getImage(type: ImageType.ProfileImage);
                     },
                     child: new Align(
                       alignment: Alignment.center,
@@ -101,20 +120,25 @@ class _RegistrationScreen extends State<RegistrationScreen> {
 
                           Observer( builder: (_) =>
                           store.imageUrl == null ? Container() :
-                          Column(
-                              children:[
-                                Icon(
-                                  Icons.camera_alt_rounded,
-                                  color: AppColors.primaryColor,
-                                  size: 28,
-                                ),
 
-                                Text("Change Photo",style: TextStyle(
-                                  color: Color(0xff232949),
-                                  fontSize: 14,
-                                )),
+                              GestureDetector(
+                                onTap: (){ store.getImage(type: ImageType.ProfileImage);},
+                                child:     Column(
+                                    children:[
+                                      Icon(
+                                        Icons.camera_alt_rounded,
+                                        color: AppColors.primaryColor,
+                                        size: 28,
+                                      ),
 
-                              ]),
+                                      Text("Change Photo",style: TextStyle(
+                                        color: Color(0xff232949),
+                                        fontSize: 14,
+                                      )),
+
+                                    ]),
+                              )
+
                           ),
                         ],
                       ),
@@ -127,13 +151,14 @@ class _RegistrationScreen extends State<RegistrationScreen> {
             Observer(
               builder: (_) =>
                   InputField(
+                    controller: store.imeiController,
                     type: TextInputType.number,
                     hint: 'Enter your IMEI',
                     border:  InputBorder.none,
                     filled: true,
+                    maxLength: 15,
                     textAlign: TextAlign.center,
                     color : Color(0XFFD8D8D8),
-                    onChanged: (v) => store.IMEI= v,
                     message: store.IMEIErr,
                     error: store.IMEIErr != null,
                   ),
@@ -143,13 +168,13 @@ class _RegistrationScreen extends State<RegistrationScreen> {
             Observer(
               builder: (_) =>
                   InputField(
+                    controller: store.firstNameController,
                     type: TextInputType.emailAddress,
                     hint: 'Enter First Name',
                     border:  InputBorder.none,
                     filled: true,
                     textAlign: TextAlign.center,
                     color : Color(0XFFD8D8D8),
-                    onChanged: (v) => store.firstName= v,
                     message: store.firstNameErr,
                     error: store.firstNameErr != null,
 
@@ -161,13 +186,14 @@ class _RegistrationScreen extends State<RegistrationScreen> {
             Observer(
               builder: (_) =>
                   InputField(
+                    controller: store.lastNameController,
                     type: TextInputType.emailAddress,
                     hint: 'Enter Last Name',
                     border:  InputBorder.none,
                     filled: true,
                     textAlign: TextAlign.center,
                     color : Color(0XFFD8D8D8),
-                    onChanged: (v) => store.lastName= v,
+
                     message: store.lastNameErr,
                     error: store.lastNameErr != null,
                   ),
@@ -208,15 +234,19 @@ class _RegistrationScreen extends State<RegistrationScreen> {
                  store.showDate==true?
                  GestureDetector(
                       onTap: ()=>{
-                        store.getImage()
+                        store.getImage(type: ImageType.PASSPORT)
                       },
                       child:  Container(
                         color: Color(0XFFE5E5E5),
                         width: size.width,
                         height: 130,
                         child: Center(
-                          child: Icon(Icons.upload_rounded),
+                          child: store.passport== null?
+                          Icon(Icons.upload_rounded):
+                          Image.file(store.passport),
                         ),
+
+
                         // child:Image.file(File())
                       )
 
@@ -230,13 +260,13 @@ class _RegistrationScreen extends State<RegistrationScreen> {
         Observer(
           builder: (_) =>
             InputField(
+              controller: store.emailController,
               type: TextInputType.emailAddress,
               hint: 'Enter Email',
               border:  InputBorder.none,
               filled: true,
               textAlign: TextAlign.center,
               color : Color(0XFFD8D8D8),
-              onChanged: (v) => store.email= v ,
               message: store.emailErr,
               error: store.emailErr != null,
             )
@@ -251,7 +281,7 @@ class _RegistrationScreen extends State<RegistrationScreen> {
                style:ButtonStyle(backgroundColor: MaterialStateProperty.all( AppColors.primaryColor),) ,
                onPressed: (){
 
-                 store.submit(context: context);
+                 store.submit(context: context,dbHelper:dbHelper);
                },
                child: Text("Save"),
              ),
