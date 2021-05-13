@@ -1,8 +1,11 @@
 The project is segmented into three folders, one is database,
-the second one is the screen, the third one is the utils.
-The database contains the implementation for the sql dm,
- where I configured my database and did data class.
+the second one is the screen,
+ the third one is the utils.
+
+The database contains the implementation for the database storage using  sqllite,
+ where I configured my database and did data class -.
  Then the screen is where I implemented all my UI designs.
+
  The screen has a folder called registration_screen.
  It is segmented to a business logic and the UI.
   The registration_screen_mobx contains the business logic.

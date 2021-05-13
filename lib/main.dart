@@ -1,6 +1,7 @@
 
 import 'package:customer_registration/database/DBHelper.dart';
 import 'package:customer_registration/screens/app_entrance.dart';
+import 'package:customer_registration/utils/writeToSdCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +10,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
  // requestStoragePermissions();
+
+
 
   runApp(CustomerHome());
 }

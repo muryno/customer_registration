@@ -5,6 +5,7 @@
 
 
 
+import 'package:customer_registration/utils/writeToSdCard.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionHandler{
@@ -32,7 +33,7 @@ class PermissionHandler{
 
     //External permission
     if (!manageExternalStorage.isGranted) {
-      await Permission.manageExternalStorage.request();
+      await FileDownloaderState().getExternalSdCardPath();
     }
 
 

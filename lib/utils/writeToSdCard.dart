@@ -3,7 +3,6 @@
 import 'dart:io' as Io;
 import 'dart:io';
 import 'package:customer_registration/screens/storage_details.dart';
-import 'package:customer_registration/utils/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image/image.dart' as IM;
 
@@ -18,11 +17,12 @@ class  FileDownloaderState {
     if (await Permission.storage.request().isGranted) {
 
       try {
+
         ///write to storage
         var testdir = await new Io.Directory('${directory.path}').create(recursive: true);
         IM.Image image = IM.decodeImage(file.readAsBytesSync());
         return new Io.File(
-            '${testdir.path}/${DateTime.now().toUtc().toIso8601String()}.png')
+            '${testdir.path}${DateTime.now().toUtc().toIso8601String()}.png')
           ..writeAsBytesSync(IM.encodePng(image));
 
 
@@ -54,8 +54,8 @@ class  FileDownloaderState {
 
     print("rebuilt path: " + rebuiltPath);
 
-    StorageDetails.getPermission(rebuiltPath);
-     new Directory(rebuiltPath);
+   StorageDetails.getPermission(rebuiltPath);
+    return  Directory(rebuiltPath);
   }
 
 }

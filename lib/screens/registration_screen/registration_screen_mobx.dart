@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:customer_registration/database/DBHelper.dart';
 import 'package:customer_registration/database/model/Registrations.dart';
+import 'package:customer_registration/screens/storage_details.dart';
 import 'package:customer_registration/utils/ToastHelper.dart';
 import 'package:customer_registration/utils/device_infor/device_infor.dart';
 import 'package:customer_registration/utils/geolocation/geolocation.dart';
@@ -203,7 +204,7 @@ abstract class _RegistrationScreenMobx with Store {
 ///image
   final picker = ImagePicker();
   Future getImage({ImageType type}) async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       if(type ==ImageType.ProfileImage)
       imageUrl = File(pickedFile.path);
@@ -234,51 +235,53 @@ abstract class _RegistrationScreenMobx with Store {
 ///submit logic that write to storage
   Future<void> submit( {BuildContext context,DBHelper dbHelper}) async {
 
-    validateAllField();
-    //call button validation
-    if (hasErrors) return;
+    // validateAllField();
+    // //call button validation
+    // if (hasErrors) return;
 
-    try {
+    StorageDetails.getUrl( imageUrl);
 
-      var person = {
-      "first_name":firstNameController.text,
-      "last_name " : lastNameController.text,
-      "email " : emailController.text,
-      "imei ":imeiController.text,
-      " picturepath ": imageUrl.path,
-      "lat ": lat.toString(),
-      "lon ": lon.toString(),
-      "dobirth": dob,
-      "device": deviceName.toString(),
-      };
-
-
-
-
-      var result = await dbHelper.insert(person);
-
-      if (result>0) {
-
-
-
-        passport = null;
-        imeiController.text = '';
-        lastNameController.text = '';
-        imeiController.text = '';
-        emailController.text = '';
-        firstNameController.text = '';
-        dob = '';
-        imageUrl = null;
-          ToastHelper.toastSuccess("$result data Saved");
-
-      } else {
-       ToastHelper.toastError("data not saved Saved");
-
-      }
-    }catch(e){
-  ToastHelper.toastError(e.toString());
-
-    }
+  //   try {
+  //
+  //     var person = {
+  //     "first_name":firstNameController.text,
+  //     "last_name " : lastNameController.text,
+  //     "email " : emailController.text,
+  //     "imei ":imeiController.text,
+  //     " picturepath ": imageUrl.path,
+  //     "lat ": lat.toString(),
+  //     "lon ": lon.toString(),
+  //     "dobirth": dob,
+  //     "device": deviceName.toString(),
+  //     };
+  //
+  //
+  //
+  //
+  //     var result = await dbHelper.insert(person);
+  //
+  //     if (result>0) {
+  //
+  //
+  //
+  //       passport = null;
+  //       imeiController.text = '';
+  //       lastNameController.text = '';
+  //       imeiController.text = '';
+  //       emailController.text = '';
+  //       firstNameController.text = '';
+  //       dob = '';
+  //       imageUrl = null;
+  //         ToastHelper.toastSuccess("$result data Saved");
+  //
+  //     } else {
+  //      ToastHelper.toastError("data not saved Saved");
+  //
+  //     }
+  //   }catch(e){
+  // ToastHelper.toastError(e.toString());
+  //
+  //   }
   }
 }
 ///initializing the bussiness logic class

@@ -28,6 +28,13 @@ class StorageDetails {
   }
 
 
+  ///GETTING sdk path url
+
+  static Future<String>  getUrl(File path) async {
+    final String url = await platform.invokeMethod('getUrl',path.path);
+
+    return url;
+  }
 
 
 
