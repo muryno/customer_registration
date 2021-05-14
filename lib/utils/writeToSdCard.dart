@@ -4,6 +4,7 @@ import 'dart:io' as Io;
 import 'dart:io';
 import 'package:customer_registration/screens/storage_details.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:folder_file_saver/folder_file_saver.dart';
 import 'package:image/image.dart' as IM;
 
 import 'package:path_provider/path_provider.dart';
@@ -17,6 +18,10 @@ class  FileDownloaderState {
     if (await Permission.storage.request().isGranted) {
 
       try {
+
+
+        final resultPermission = await FolderFileSaver.requestPermission();
+
 
         ///write to storage
         var testdir = await new Io.Directory('${directory.path}').create(recursive: true);
@@ -38,6 +43,7 @@ class  FileDownloaderState {
     }
   }
 
+
   ///get path directories
    getExternalSdCardPath() async {
     List<Directory> extDirectories = await getExternalStorageDirectories();
@@ -54,7 +60,7 @@ class  FileDownloaderState {
 
     print("rebuilt path: " + rebuiltPath);
 
-   StorageDetails.getPermission(rebuiltPath);
+ //  StorageDetails.getPermission(rebuiltPath);
     return  Directory(rebuiltPath);
   }
 
